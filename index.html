@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#2563eb">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="RentTrack">
+    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIlJlbnRUcmFjayAtIFJlbnRhbCBNYW5hZ2VtZW50IiwKICAic2hvcnRfbmFtZSI6ICJSZW50VHJhY2siLAogICJzdGFydF91cmwiOiAiLyIsCiAgImRpc3BsYXkiOiAic3RhbmRhbG9uZSIsCiAgImJhY2tncm91bmRfY29sb3IiOiAiI2ZmZmZmZiIsCiAgInRoZW1lX2NvbG9yIjogIiMyNTYzZWIiLAogICJvcmllbnRhdGlvbiI6ICJwb3J0cmFpdCIsCiAgImljb25zIjogWwogICAgewogICAgICAic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbCwlM0NzdmcgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJyB2aWV3Qm94PScwIDAgMTAwIDEwMCclM0UlM0NyZWN0IHdpZHRoPScxMDAnIGhlaWdodD0nMTAwJyBmaWxsPSclMjMyNTYzZWInLyUzRSUzQ3RleHQgeD0nNTAlMjUnIHk9JzUwJTI1JyBmb250LXNpemU9JzUwJyB0ZXh0LWFuY2hvcj0nbWlkZGxlJyBkeT0nLjNlbScgZmlsbD0nd2hpdGUnJTNFUiUzQy90ZXh0JTNFJTNDL3N2ZyUzRSIsCiAgICAgICJzaXplcyI6ICIxOTJ4MTkyIiwKICAgICAgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCIKICAgIH0sCiAgICB7CiAgICAgICJzcmMiOiAiZGF0YTppbWFnZS9zdmcreG1sLCUzQ3N2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMDAgMTAwJyUzRSUzQ3JlY3Qgd2lkdGg9JzEwMCcgaGVpZ2h0PScxMDAnIGZpbGw9JyUyMzI1NjNlYicvJTNFJTNDdGV4dCB4PSc1MCUyNScgeT0nNTAlMjUnIGZvbnQtc2l6ZT0nNTAnIHRleHQtYW5jaG9yPSdtaWRkbGUnIGR5PScuM2VtJyBmaWxsPSd3aGl0ZSclM0VSJTNDL3RleHQlM0UlM0Mvc3ZnJTNFIiwKICAgICAgInNpemVzIjogIjUxMng1MTIiLAogICAgICAidHlwZSI6ICJpbWFnZS9zdmcreG1sIgogICAgfQogIF0KfQ==">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%232563eb'/%3E%3Ctext x='50%25' y='50%25' font-size='50' text-anchor='middle' dy='.3em' fill='white'%3ER%3C/text%3E%3C/svg%3E">
+    <title>RentTrack - Mobile App</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --secondary: #64748b;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+            --text-primary: #0f172a;
+            --text-secondary: #64748b;
+            --border: #e2e8f0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-light);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Mobile App Container */
+        .app-container {
+            max-width: 100%;
+            min-height: 100vh;
+            background: var(--bg-light);
+            position: relative;
+            padding-bottom: 70px;
+        }
+
+        /* Splash Screen */
+        .splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s;
+        }
+
+        .splash-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .splash-logo {
+            width: 100px;
+            height: 100px;
+            background: white;
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .splash-title {
+            color: white;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .splash-subtitle {
+            color: rgba(255,255,255,0.9);
+            font-size: 16px;
+        }
+
+        .loading-spinner {
+            margin-top: 30px;
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Login Screen */
+        .login-screen {
+            display: none;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+
+        .login-screen.active {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .login-card {
+            background: white;
+            border-radius: 20px;
+            padding: 32px 24px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .login-logo {
+            width: 80px;
+            height: 80px;
+            background: var(--primary);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: white;
+            margin: 0 auto 16px;
+        }
+
+        .login-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .login-subtitle {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.2s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:active {
+            background: var(--primary-dark);
+            transform: scale(0.98);
+        }
+
+        .demo-creds {
+            margin-top: 24px;
+            padding: 16px;
+            background: var(--bg-light);
+            border-radius: 12px;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        /* App Header */
+        .app-header {
+            background: white;
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-title {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        /* Dashboard Content */
+        .dashboard-content {
+            display: none;
+            padding: 20px;
+        }
+
+        .dashboard-content.active {
+            display: block;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .stat-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        /* Bills List */
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .bill-card {
+            background: white;
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .bill-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .bill-type {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .bill-amount {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .bill-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .bill-date {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .badge {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .badge-success {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+        }
+
+        .badge-warning {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning);
+        }
+
+        .badge-danger {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+            box-shadow: 0 -2px 8px rgba(0,0,0,0.1);
+            z-index: 100;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            padding: 8px 16px;
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: all 0.2s;
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+        }
+
+        .nav-icon {
+            font-size: 24px;
+        }
+
+        .nav-label {
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        /* Admin Specific */
+        .action-buttons {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .action-btn {
+            padding: 16px;
+            background: white;
+            border: 2px solid var(--primary);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .action-btn:active {
+            background: var(--primary);
+            color: white;
+            transform: scale(0.98);
+        }
+
+        .action-icon {
+            font-size: 32px;
+        }
+
+        .action-label {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        /* Renter Card */
+        .renter-card {
+            background: white;
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .renter-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .renter-info h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .renter-room {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .renter-dues {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--danger);
+        }
+
+        .alert {
+            padding: 12px 16px;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            font-size: 14px;
+        }
+
+        .alert-success {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+        }
+
+        .alert-error {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+        }
+
+        /* Install Prompt */
+        .install-prompt {
+            position: fixed;
+            bottom: 80px;
+            left: 20px;
+            right: 20px;
+            background: var(--primary);
+            color: white;
+            padding: 16px;
+            border-radius: 12px;
+            display: none;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            z-index: 200;
+        }
+
+        .install-prompt.show {
+            display: flex;
+        }
+
+        .install-text {
+            flex: 1;
+        }
+
+        .install-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .install-subtitle {
+            font-size: 13px;
+            opacity: 0.9;
+        }
+
+        .btn-install {
+            padding: 8px 16px;
+            background: white;
+            color: var(--primary);
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .btn-close {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 0;
+            width: 32px;
+            height: 32px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Splash Screen -->
+    <div id="splashScreen" class="splash-screen">
+        <div class="splash-logo">R</div>
+        <div class="splash-title">RentTrack</div>
+        <div class="splash-subtitle">Rental Management Made Easy</div>
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Login Screen -->
+    <div id="loginScreen" class="login-screen">
+        <div class="login-card">
+            <div class="login-header">
+                <div class="login-logo">R</div>
+                <h1 class="login-title">Welcome Back</h1>
+                <p class="login-subtitle">Sign in to continue</p>
+            </div>
+            <div id="loginAlert"></div>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label class="form-label">Email Address</label>
+                    <input type="email" class="form-input" id="loginEmail" required placeholder="you@example.com">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-input" id="loginPassword" required placeholder="••••••••">
+                </div>
+                <button type="submit" class="btn btn-primary">Sign In</button>
+            </form>
+            <div class="demo-creds">
+                <strong>Demo Credentials:</strong><br>
+                <strong>Admin:</strong> admin@renttrack.com / admin123<br>
+                <strong>Renter:</strong> renter@renttrack.com / renter123
+            </div>
+        </div>
+    </div>
+
+    <!-- Renter App -->
+    <div id="renterApp" class="app-container" style="display: none;">
+        <div class="app-header">
+            <h1 class="header-title" id="renterHeaderTitle">Dashboard</h1>
+            <div class="user-avatar">R</div>
+        </div>
+
+        <!-- Dashboard -->
+        <div id="renterDashboard" class="dashboard-content active">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">💰</div>
+                    <div class="stat-label">Total Dues</div>
+                    <div class="stat-value">₹12,450</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📅</div>
+                    <div class="stat-label">Upcoming</div>
+                    <div class="stat-value">3</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">✓</div>
+                    <div class="stat-label">Paid</div>
+                    <div class="stat-value">₹8,500</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🏠</div>
+                    <div class="stat-label">Room</div>
+                    <div class="stat-value">201</div>
+                </div>
+            </div>
+
+            <h2 class="section-title">Recent Bills</h2>
+            <div class="bill-card">
+                <div class="bill-header">
+                    <div class="bill-type">Room Rent</div>
+                    <div class="bill-amount">₹8,000</div>
+                </div>
+                <div class="bill-footer">
+                    <div class="bill-date">Due: Jan 5, 2025</div>
+                    <span class="badge badge-warning">Pending</span>
+                </div>
+            </div>
+            <div class="bill-card">
+                <div class="bill-header">
+                    <div class="bill-type">Wifi Bill</div>
+                    <div class="bill-amount">₹500</div>
+                </div>
+                <div class="bill-footer">
+                    <div class="bill-date">Due: Jan 5, 2025</div>
+                    <span class="badge badge-warning">Pending</span>
+                </div>
+            </div>
+            <div class="bill-card">
+                <div class="bill-header">
+                    <div class="bill-type">Electricity</div>
+                    <div class="bill-amount">₹1,200</div>
+                </div>
+                <div class="bill-footer">
+                    <div class="bill-date">Due: Jan 10, 2025</div>
+                    <span class="badge badge-warning">Pending</span>
+                </div>
+            </div>
+            <div class="bill-card">
+                <div class="bill-header">
+                    <div class="bill-type">Maintenance</div>
+                    <div class="bill-amount">₹500</div>
+                </div>
+                <div class="bill-footer">
+                    <div class="bill-date">Paid: Dec 28, 2024</div>
+                    <span class="badge badge-success">Paid</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bills -->
+        <div id="renterBills" class="dashboard-content">
+            <h2 class="section-title">All Bills</h2>
+            <div class="bill-card">
+                <div class="bill-header">
+                    <div class="bill-type">Room Rent - December</div>
+                    <div class="bill-amount">₹8,000</div>
+                </div>
+                <div class="bill-footer">
+                    <div class="bill-date">Paid: Dec 1, 2024</div>
+                    <span class="badge badge-success">Paid</span>
+                </div>
+            </div>
+            <div class="bill-card">
+                <div class="bill-header">
+                    <div class="bill-type">Wifi - December</div>
+                    <div class="bill-amount">₹500</div>
+                </div>
+                <div class="bill-footer">
+                    <div class="bill-date">Paid: Dec 1, 2024</div>
+                    <span class="badge badge-success">Paid</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payments -->
+        <div id="renterPayments" class="dashboard-content">
+            <h2 class="section-title">Payment History</h2>
+            <div class="bill-card">
+                <div class="bill-header">
+                    <div class="bill-type">December Rent + Bills</div>
+                    <div class="bill-amount">₹8,500</div>
+                </div>
+                <div class="bill-footer">
+                    <div class="bill-date">Dec 1, 2024</div>
+                    <span class="badge badge-success">Completed</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile -->
+        <div id="renterProfile" class="dashboard-content">
+            <h2 class="section-title">Profile</h2>
+            <div class="bill-card">
+                <div style="margin-bottom: 16px;">
+                    <div style="font-size: 14px; color: var(--text-secondary); margin-bottom: 4px;">Name</div>
+                    <div style="font-size: 16px; font-weight: 600;">John Doe</div>
+                </div>
+                <div style="margin-bottom: 16px;">
+                    <div style="font-size: 14px; color: var(--text-secondary); margin-bottom: 4px;">Email</div>
+                    <div style="font-size: 16px; font-weight: 600;">renter@renttrack.com</div>
+                </div>
+                <div style="margin-bottom: 16px;">
+                    <div style="font-size: 14px; color: var(--text-secondary); margin-bottom: 4px;">Room Number</div>
+                    <div style="font-size: 16px; font-weight: 600;">201</div>
+                </div>
+                <div>
+                    <div style="font-size: 14px; color: var(--text-secondary); margin-bottom: 4px;">Monthly Rent</div>
+                    <div style="font-size: 16px; font-weight: 600;">₹8,000</div>
+                </div>
+            </div>
+            <button class="btn btn-primary" onclick="logout()" style="margin-top: 20px;">Logout</button>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <div class="nav-item active" data-page="renterDashboard">
+                <div class="nav-icon">🏠</div>
+                <div class="nav-label">Home</div>
+            </div>
+            <div class="nav-item" data-page="renterBills">
+                <div class="nav-icon">📄</div>
+                <div class="nav-label">Bills</div>
+            </div>
+            <div class="nav-item" data-page="renterPayments">
+                <div class="nav-icon">💳</div>
+                <div class="nav-label">Payments</div>
+            </div>
+            <div class="nav-item" data-page="renterProfile">
+                <div class="nav-icon">👤</div>
+                <div class="nav-label">Profile</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin App -->
+    <div id="adminApp" class="app-container" style="display: none;">
+        <div class="app-header">
+            <h1 class="header-title">Admin Dashboard</h1>
+            <div class="user-avatar">A</div>
+        </div>
+
+        <div id="adminDashboard" class="dashboard-content active">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">👥</div>
+                    <div class="stat-label">Renters</div>
+                    <div class="stat-value">24</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">💰</div>
+                    <div class="stat-label">Outstanding</div>
+                    <div class="stat-value">₹2.4L</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">✓</div>
+                    <div class="stat-label">Collected</div>
+                    <div class="stat-value">₹1.8L</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📄</div>
+                    <div class="stat-label">Pending</div>
+                    <div class="stat-value">18</div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <div class="action-btn">
+                    <div class="action-icon">➕</div>
+                    <div class="action-label">Add Renter</div>
+                </div>
+                <div class="action-btn">
+                    <div class="action-icon">📝</div>
+                    <div class="action-label">Create Bill</div>
+                </div>
+                <div class="action-btn">
+                    <div class="action-icon">💳</div>
+                    <div class="action-label">Record Payment</div>
+                </div>
+                <div class="action-btn">
+                    <div class="action-icon">🔔</div>
+                    <div class="action-label">Send Notice</div>
+                </div>
+            </div>
+
+            <h2 class="section-title">Recent Activity</h2>
+            <div class="renter-card">
+                <div class="renter-header">
+                    <div class="renter-info">
+                        <h3>John Doe</h3>
+                        <div class="renter-room">Room 201</div>
+                    </div>
+                    <div class="renter-dues">₹12,450</div>
+                </div>
+                <span class="badge badge-warning">Pending</span>
+            </div>
+            <div class="renter-card">
+                <div class="renter-header">
+                    <div class="renter-info">
+                        <h3>Jane Smith</h3>
+                        <div class="renter-room">Room 202</div>
+                    </div>
+                    <div class="renter-dues" style="color: var(--success);">₹0</div>
+                </div>
+                <span class="badge badge-success">Paid</span>
+            </div>
+        </div>
+
+        <div class="bottom-nav">
+            <div class="nav-item active">
+                <div class="nav-icon">📊</div>
+                <div class="nav-label">Dashboard</div>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">👥</div>
+                <div class="nav-label">Renters</div>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">📄</div>
+                <div class="nav-label">Bills</div>
+            </div>
+            <div class="nav-item" onclick="logout()">
+                <div class="nav-icon">🚪</div>
+                <div class="nav-label">Logout</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Install Prompt -->
+    <div id="installPrompt" class="install-prompt">
+        <div class="install-text">
+            <div class="install-title">Install RentTrack</div>
+            <div class="install-subtitle">Add to home screen for quick access</div>
+        </div>
+        <button class="btn-install" onclick="installApp()">Install</button>
+        <button class="btn-close" onclick="closeInstallPrompt()">×</button>
+    </div>
+
+    <script>
+        // PWA Install
+        let deferredPrompt;
+        
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            document.getElementById('installPrompt').classList.add('show');
+        });
+
+        function installApp() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    deferredPrompt = null;
+                    closeInstallPrompt();
+                });
+            }
+        }
+
+        function closeInstallPrompt() {
+            document.getElementById('installPrompt').classList.remove('show');
+        }
+
+        // Splash Screen
+        setTimeout(() => {
+            document.getElementById('splashScreen').classList.add('hidden');
+            setTimeout(() => {
+                document.getElementById('loginScreen').classList.add('active');
+            }, 500);
+        }, 2000);
+
+        // Demo Users
+        const users = {
+            'admin@renttrack.com': { password: 'admin123', role: 'admin' },
+            'renter@renttrack.com': { password: 'renter123', role: 'renter' }
+        };
+
+        let currentUser = null;
+
+        // Login
+        document.getElementById('loginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            const alertDiv = document.getElementById('loginAlert');
+
+            if (users[email] && users[email].password === password) {
+                currentUser = { email, ...users[email] };
+                alertDiv.innerHTML = '<div class="alert alert-success">Login successful!</div>';
+                
+                setTimeout(() => {
+                    document.getElementById('loginScreen').classList.remove('active');
+                    if (currentUser.role === 'admin') {
+                        document.getElementById('adminApp').style.display = 'block';
+                    } else {
+                        document.getElementById('renterApp').style.display = 'block';
+                    }
+                }, 800);
+            } else {
+                alertDiv.innerHTML = '<div class="alert alert-error">Invalid credentials</div>';
+            }
+        });
+
+        // Logout
+        function logout() {
+            currentUser = null;
+            document.getElementById('renterApp').style.display = 'none';
+            document.getElementById('adminApp').style.display = 'none';
+            document.getElementById('loginScreen').classList.add('active');
+            document.getElementById('loginEmail').value = '';
+            document.getElementById('loginPassword').value = '';
+            document.getElementById('loginAlert').innerHTML = '';
+        }
+
+        // Navigation
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const page = this.getAttribute('data-page');
+                if (!page) return;
+
+                // Update active nav
+                this.parentElement.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+
+                // Show page
+                document.querySelectorAll('.dashboard-content').forEach(p => p.classList.remove('active'));
+                document.getElementById(page).classList.add('active');
+
+                // Update header
+                const titles = {
+                    'renterDashboard': 'Dashboard',
+                    'renterBills': 'My Bills',
+                    'renterPayments': 'Payments',
+                    'renterProfile': 'Profile'
+                };
+                const headerTitle = document.getElementById('renterHeaderTitle');
+                if (headerTitle && titles[page]) {
+                    headerTitle.textContent = titles[page];
+                }
+            });
+        });
+
+        // Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('data:text/javascript;base64,c2VsZi5hZGRFdmVudExpc3RlbmVyKCdpbnN0YWxsJywgZnVuY3Rpb24oZXZlbnQpIHsKICBzZWxmLnNraXBXYWl0aW5nKCk7Cn0pOwoKc2VsZi5hZGRFdmVudExpc3RlbmVyKCdhY3RpdmF0ZScsIGZ1bmN0aW9uKGV2ZW50KSB7CiAgcmV0dXJuIHNlbGYuY2xpZW50cy5jbGFpbSgpOwp9KTsKCnNlbGYuYWRkRXZlbnRMaXN0ZW5lcignZmV0Y2gnLCBmdW5jdGlvbihldmVudCkgewogIGV2ZW50LnJlc3BvbmRXaXRoKGZldGNoKGV2ZW50LnJlcXVlc3QpKTsKfSk7')
+                .then(() => console.log('Service Worker registered'));
+        }
+    </script>
+</body>
+</html>
